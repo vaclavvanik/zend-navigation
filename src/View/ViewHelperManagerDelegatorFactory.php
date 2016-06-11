@@ -8,8 +8,8 @@
 namespace Zend\Navigation\View;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\DelegatorFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\DelegatorFactoryInterface;
+
 
 /**
  * Inject the zend-view HelperManager with zend-navigation view helper configuration.
@@ -30,15 +30,5 @@ class ViewHelperManagerDelegatorFactory implements DelegatorFactoryInterface
         $viewHelpers = $callback();
         (new HelperConfig())->configureServiceManager($viewHelpers);
         return $viewHelpers;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return \Zend\View\HelperPluginManager
-     */
-    public function createDelegatorWithName(ServiceLocatorInterface $container, $name, $requestedName, $callback)
-    {
-        return $this($container, $requestedName, $callback);
     }
 }

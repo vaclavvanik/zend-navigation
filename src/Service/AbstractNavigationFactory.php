@@ -12,17 +12,15 @@ namespace Zend\Navigation\Service;
 use Interop\Container\ContainerInterface;
 use Zend\Config;
 use Zend\Http\Request;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Mvc\Router\RouteStackInterface as Router;
+use Zend\Router\RouteMatch;
+use Zend\Router\RouteStackInterface as Router;
 use Zend\Navigation\Exception;
 use Zend\Navigation\Navigation;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Abstract navigation factory
  */
-abstract class AbstractNavigationFactory implements FactoryInterface
+abstract class AbstractNavigationFactory
 {
     /**
      * @var array
@@ -40,19 +38,6 @@ abstract class AbstractNavigationFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new Navigation($this->getPages($container));
-    }
-
-    /**
-     * Create and return a new Navigation instance (v2).
-     *
-     * @param ContainerInterface $container
-     * @param null|string $name
-     * @param null|string $requestedName
-     * @return Navigation
-     */
-    public function createService(ServiceLocatorInterface $container, $name = null, $requestedName = null)
-    {
-        return $this($container, $requestedName);
     }
 
     /**

@@ -9,7 +9,9 @@
 
 namespace ZendTest\Navigation\TestAsset;
 
-class Router extends \Zend\Mvc\Router\Http\TreeRouteStack
+use Zend\Router\Http\TreeRouteStack;
+
+class Router extends TreeRouteStack
 {
     const RETURN_URL = 'spotify:track:2nd6CTjR9zjHGT0QtpfLHe';
 

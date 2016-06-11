@@ -13,8 +13,8 @@ use Zend\Config\Config;
 use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Mvc\Router\RouteStackInterface;
+use Zend\Router\RouteMatch;
+use Zend\Router\RouteStackInterface;
 use Zend\Navigation;
 use Zend\Navigation\Page\Mvc as MvcPage;
 use Zend\Navigation\Service\ConstructedNavigationFactory;
@@ -109,8 +109,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
         $recursive = function ($that, $pages) use (&$recursive) {
             foreach ($pages as $page) {
                 if ($page instanceof MvcPage) {
-                    $that->assertInstanceOf('Zend\Mvc\Router\RouteStackInterface', $page->getRouter());
-                    $that->assertInstanceOf('Zend\Mvc\Router\RouteMatch', $page->getRouteMatch());
+                    $that->assertInstanceOf(RouteStackInterface::class, $page->getRouter());
+                    $that->assertInstanceOf(RouteMatch::class, $page->getRouteMatch());
                 }
 
                 $recursive($that, $page->getPages());
@@ -134,9 +134,11 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
                 ->method('injectComponents')
                 ->with(
                     $this->isType('array'),
-                    $this->isInstanceOf('Zend\Mvc\Router\RouteMatch'),
-                    $this->isInstanceOf('Zend\Mvc\Router\RouteStackInterface')
+                    $this->isInstanceOf(RouteMatch::class),
+                    $this->isInstanceOf(RouteStackInterface::class)
                 );
+
+        /** @var callable $factory */
 
         $this->serviceManager->setFactory('Navigation', function ($services) use ($factory) {
             return $factory($services, 'Navigation');
@@ -160,8 +162,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
         $recursive = function ($that, $pages) use (&$recursive) {
             foreach ($pages as $page) {
                 if ($page instanceof MvcPage) {
-                    $that->assertInstanceOf('Zend\Mvc\Router\RouteStackInterface', $page->getRouter());
-                    $that->assertInstanceOf('Zend\Mvc\Router\RouteMatch', $page->getRouteMatch());
+                    $that->assertInstanceOf(RouteStackInterface::class, $page->getRouter());
+                    $that->assertInstanceOf(RouteMatch::class, $page->getRouteMatch());
                 }
 
                 $recursive($that, $page->getPages());
